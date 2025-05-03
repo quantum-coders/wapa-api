@@ -7,7 +7,10 @@ class WhatsAppController {
 	static async webhook(req, res) {
 		try {
 
-			console.log(req.body.event);
+			console.log(req.body);
+
+
+
 
 			return res.respond({
 				message: 'Event not supported',
