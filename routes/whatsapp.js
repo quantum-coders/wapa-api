@@ -1,7 +1,8 @@
 import { auth, Primate } from '@thewebchimp/primate';
+import WhatsappController from '#controllers/whatsapp.controller.js';
 
 const router = Primate.getRouter();
 
-//router.get('/client', auth, WhatsappController.newClient);
+router.post('/webhook', WhatsappController.webhook);
 
 export { router };
