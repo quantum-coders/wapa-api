@@ -33,7 +33,7 @@ class WhatsappService {
 					}
 
 					// prepare the user data for context
-					const userData = {
+					let userData = {
 						nicename: user.nicename,
 						email: user.email,
 					};
@@ -52,13 +52,21 @@ class WhatsappService {
 						return null;
 					}
 
+					// =================================================================================================
 					// If we have the user data, we go to the AI services that use the function calling
+					// =================================================================================================
+
+					// Prepare new user context
+					const userData = {
+						nicename: userData.nicename,
+						email: userData.email,
+					};
 
 					// first we get the conversation history
 					const history = await WahaService.getConversationHistory(from);
 
 					await WahaService.startTyping(from);
-					const tooledResponse = await AIService.tooledConversation(message, history);
+					const tooledResponse = await AIService.tooledConversation(message, userData, history);
 					await WahaService.sendText(from, tooledResponse);
 
 					/*
