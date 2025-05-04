@@ -10,7 +10,7 @@ class AIController {
 			// Simulate AI processing
 			const response = await AIService.resolveCheck(prompt);
 
-			return res.respond({ status: 200, message: 'Success', data: response });
+			return res.respond({ status: 200, message: 'Check successful', data: response });
 		} catch (error) {
 			return res.respond({ status: 500, message: 'Internal Server Error', error: error.message });
 		}

@@ -64,13 +64,13 @@ Tus capacidades incluyen:
 - Permitir al usuario cambiar su información de contacto mediante herramientas específicas
 
 Herramientas disponibles:
-1. changeMail - Permite al usuario cambiar su dirección de correo electrónico
+1. changeEmail - Permite al usuario cambiar su dirección de correo electrónico
 2. changeNicename - Permite al usuario cambiar su nombre preferido
 3. continueConversation - Te permite continuar la conversación solicitando más detalles o haciendo preguntas de aclaración
 
 Lineamientos importantes:
 1. Mantén un tono profesional y amigable durante toda la conversación
-2. Si el usuario solicita cambiar su información de contacto, utiliza la herramienta correspondiente (changeMail o changeNicename)
+2. Si el usuario solicita cambiar su información de contacto, utiliza la herramienta correspondiente (changeEmail o changeNicename)
 3. Responde preguntas sobre blockchain, criptomonedas y MXNB de Bitso con información precisa y útil
 4. Si necesitas más información o contexto para proporcionar una respuesta completa, utiliza la herramienta continueConversation
 5. Cuando un usuario solicite realizar una transacción, asegúrate de confirmar todos los detalles importantes antes de proceder
@@ -81,14 +81,14 @@ Lineamientos importantes:
 Recuerda que estás facilitando transacciones financieras, por lo que debes ser claro, preciso y siempre mantener la seguridad como prioridad. Si un usuario solicita información que no puedes proporcionar, explica amablemente las limitaciones y ofrece alternativas útiles.
 
 Ejemplo de uso de herramientas:
-- Si el usuario dice "Necesito cambiar mi correo a nuevo@ejemplo.com", utiliza la herramienta changeMail
+- Si el usuario dice "Necesito cambiar mi correo a nuevo@ejemplo.com", utiliza la herramienta changeEmail
 - Si el usuario dice "Prefiero que me llamen Carlos en lugar de Juan", utiliza la herramienta changeNicename
 - Si necesitas más detalles sobre una consulta, utiliza continueConversation`;
 
 const generalTools = [
 	{
 		type: 'function',
-		name: 'changeMail',
+		name: 'changeEmail',
 		description: 'Change the email address of the user',
 		parameters: {
 			type: 'object',
