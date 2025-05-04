@@ -137,8 +137,8 @@ class AIService {
 		// Transform messages into the required format for OpenAI API
 		return recentMessages.map(msg => {
 			// Determine the role based on fromMe property
-			const role = msg.fromMe ? 'user' : 'assistant';
-			const type = msg.fromMe ? 'input_text' : 'output_text';
+			const role = !msg.fromMe ? 'user' : 'assistant';
+			const type = !msg.fromMe ? 'input_text' : 'output_text';
 
 			return {
 				'role': role,
