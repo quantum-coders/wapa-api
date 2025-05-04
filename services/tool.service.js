@@ -77,7 +77,7 @@ class ToolService {
 		if(!user) throw new Error('User not found');
 
 		// get the balance of the user to check if it is enough
-		const balance = await CryptoService.getTokenBalance(user.metas.wallet.address, '0x82b9e52b26a2954e113f94ff26647754d5a4247d', 6);
+		let balance = await CryptoService.getTokenBalance(user.metas.wallet.address, '0x82b9e52b26a2954e113f94ff26647754d5a4247d', 6);
 		if(balance.balance < amount) throw new Error('Insufficient balance');
 
 		console.info('User balance:', balance);
@@ -126,7 +126,10 @@ class ToolService {
 
 		console.info('Transaction result:', sendMoney);
 
-		return { transaction: sendMoney, amount, contactName, contactNumber };
+		// get the balance of the user to check if it is enough
+		balance = await CryptoService.getTokenBalance(user.metas.wallet.address, '0x82b9e52b26a2954e113f94ff26647754d5a4247d', 6);
+
+		return { transaction: sendMoney, amount, contactName, contactNumber, balance };
 	}
 }
 

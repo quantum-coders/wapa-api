@@ -184,7 +184,7 @@ const generalTools = [
 				},
 				continueConversation: {
 					type: 'string',
-					description: 'A message confirming the transaction, using %amount% and %name% as placeholders. At the end of the message add the placeholder %transaction_details%, which will be replaced with the actual transaction details.',
+					description: 'A message confirming the transaction, using %amount% and %name% as placeholders. At the end of the message add the placeholder %transaction_details%, which will be replaced with the transaction link from sepolia.arbiscan.io.',
 				},
 			},
 			required: [ 'amount', 'contact', 'continueConversation' ],

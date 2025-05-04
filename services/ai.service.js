@@ -223,7 +223,7 @@ class AIService {
 
 					// replace %amount% with the actual amount
 					if(toolResponse) {
-						args.continueConversation = args.continueConversation.replace('%amount%', toolResponse.balance + ' ' + toolResponse.symbol);
+						args.continueConversation = args.continueConversation.replace('%amount%', toolResponse.balance);
 					}
 				}
 
@@ -232,7 +232,11 @@ class AIService {
 
 					// replace %amount% with the actual amount
 					if(toolResponse) {
-						args.continueConversation = args.continueConversation.replace('%amount%', toolResponse.amount + ' MXNB');
+
+						// transaction details
+						const transactionDetails = `Link: https://sepolia.arbiscan.io/token/${ toolResponse.transaction.hash }`;
+
+						args.continueConversation = args.continueConversation.replace('%amount%', toolResponse.amount);
 						args.continueConversation = args.continueConversation.replace('%name%', toolResponse.contactName);
 						args.continueConversation = args.continueConversation.replace('%transaction_details%', '\n\n' + JSON.stringify(toolResponse.transaction, null, 2));
 					}
