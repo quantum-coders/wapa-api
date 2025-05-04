@@ -232,7 +232,7 @@ class AIService {
 
 	static async resolveCheck(prompt) {
 
-		return openai.responses.create({
+		const res = await openai.responses.create({
 			model: 'gpt-4.1',
 			input: [
 				{
@@ -266,6 +266,8 @@ class AIService {
 			top_p: 1,
 			store: true,
 		});
+
+		return JSON.parse(res.output_text);
 	}
 }
 
