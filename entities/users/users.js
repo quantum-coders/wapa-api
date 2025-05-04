@@ -1,7 +1,6 @@
 import { auth, Primate } from '@thewebchimp/primate';
 import UserController from './user.controller.js';
 import multer from 'multer';
-import CampaignController from '#entities/campaigns/campaign.controller.js';
 
 const router = Primate.getRouter();
 const storage = multer.memoryStorage();

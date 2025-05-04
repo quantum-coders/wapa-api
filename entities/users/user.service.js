@@ -242,6 +242,8 @@ class UserService {
 
 	static async verifyUserExistence(idWa) {
 		try {
+			console.log(primate.prisma);
+
 			const user = await primate.prisma.user.findFirst({ where: { idWa } });
 			if(!user) return null;
 
