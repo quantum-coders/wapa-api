@@ -7,62 +7,73 @@ import userService from '#entities/users/user.service.js';
 class WhatsappService {
 
 	static async webhookResponse(payload) {
-		if(!payload.fromMe) {
-			const from = payload.from;
-			const message = payload.body;
+		const from = payload.from;
+		const message = payload.body;
 
-			console.info('Received message from:', from);
+		try {
+			if(!payload.fromMe) {
 
-			if(from === process.env.WHATSAPP_NUMBER) {
+				console.info('Received message from:', from);
 
-				console.info('Message from authorized number', process.env.WHATSAPP_NUMBER);
+				if(from === process.env.WHATSAPP_NUMBER) {
 
-				// Check if the user exists and store it
-				let user = await UserService.verifyUserExistence(from);
+					console.info('Message from authorized number', process.env.WHATSAPP_NUMBER);
 
-				// If the user doesn't exist, register them
-				if(!user) {
-					console.warn('User not found, registering for the first time');
+					// Check if the user exists and store it
+					let user = await UserService.verifyUserExistence(from);
 
-					const data = {};
-					data.nicename = payload._data?.notifyName || '';
+					// If the user doesn't exist, register them
+					if(!user) {
+						console.warn('User not found, registering for the first time');
 
-					user = await UserService.registerUserForFirstTime(from, data);
-				}
+						const data = {};
+						data.nicename = payload._data?.notifyName || '';
 
-				// prepare the user data for context
-				const userData = {
-					nicename: user.nicename,
-					email: user.email,
-				};
+						user = await UserService.registerUserForFirstTime(from, data);
+					}
 
-				// If we dont have nicename or email, we go to the onboarding service
-				if(!userData.nicename || !userData.email) {
-					console.warn('User data is missing, going to onboarding service');
+					// prepare the user data for context
+					const userData = {
+						nicename: user.nicename,
+						email: user.email,
+					};
+
+					// If we dont have nicename or email, we go to the onboarding service
+					if(!userData.nicename || !userData.email) {
+						console.warn('User data is missing, going to onboarding service');
+
+						await WahaService.startTyping(from);
+						const onboardingResponse = await AIService.onboardingConversation(message, userData);
+						console.log('onboardingResponse', onboardingResponse);
+
+						await userService.updateOnboardingData(from, onboardingResponse);
+						await WahaService.sendText(from, onboardingResponse.continue_conversation);
+
+						return null;
+					}
+
+					// If we have the user data, we go to the AI services that use the function calling
+
+					// first we get the conversation history
+					const history = await WahaService.getConversationHistory(from);
 
 					await WahaService.startTyping(from);
-					const onboardingResponse = await AIService.onboardingConversation(message, userData);
-					console.log('onboardingResponse', onboardingResponse);
+					const tooledResponse = await AIService.tooledConversation(message, history);
+					await WahaService.sendText(from, tooledResponse);
 
-					await userService.updateOnboardingData(from, onboardingResponse);
-					await WahaService.sendText(from, onboardingResponse.continue_conversation);
-
-					return null;
+					/*
+					await WahaService.startTyping(from);
+					await new Promise(resolve => setTimeout(resolve, 2000));
+					await WahaService.sendText(from, 'Hola!');
+					*/
 				}
-
-				// If we have the user data, we go to the AI services that use the function calling
-
-				// first we get the conversation history
-				const history = await WahaService.getConversationHistory(from);
-				await AIService.tooledConversation(message, history);
-
-				/*await WahaService.startTyping(from);
-				await new Promise(resolve => setTimeout(resolve, 2000));
-				await WahaService.sendText(from, 'Hola!');*/
 			}
-		}
 
-		return null;
+		} catch(error) {
+			console.error('Error in webhookResponse:', error);
+			await WahaService.stopTyping(from);
+			throw error;
+		}
 	}
 }
 

@@ -196,6 +196,16 @@ class AIService {
 
 		console.log('Response:', JSON.stringify(response, null, 2));
 
+		if(response.output[0].type === 'function_call') {
+			// JSON encode arguments
+			const name = response.output[0].name;
+			const args = JSON.parse(response.output[0].arguments);
+
+			if(name === 'continue_conversation') {
+				return args.continue_conversation;
+			}
+		}
+
 		return false;
 	}
 }
