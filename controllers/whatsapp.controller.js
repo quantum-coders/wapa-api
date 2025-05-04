@@ -13,6 +13,10 @@ class WhatsAppController {
 
 			if(event === 'message.any') {
 
+				console.log('EVENT', event);
+				console.log('FROM', payload.from);
+				console.log('TO', payload.to);
+
 				const response = await WhatsappService.aiResponse(payload);
 
 				return res.respond({
