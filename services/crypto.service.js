@@ -115,6 +115,8 @@ class CryptoService {
 			6,
 		);
 
+		console.log('mxnb', mxnb);
+
 		const eth = await this.sendToken(
 			{
 				privateKey: process.env.BASE_WALLET_PRIVATE_KEY,
@@ -125,6 +127,8 @@ class CryptoService {
 			0.01,
 			18,
 		);
+
+		console.log('eth', eth);
 
 		return { mxnb, eth };
 	}
