@@ -284,6 +284,33 @@ class UserService {
 			throw e;
 		}
 	}
+
+	static async updateUserWallet(idWa, data) {
+		try {
+			// find user
+			const user = await primate.prisma.user.findFirst({ where: { idWa } });
+			if(!user) throw new Error('User not found');
+
+			// get current metas
+			const metas = user.metas;
+
+			// update user
+			return await primate.prisma.user.update({
+				where: { id: user.id },
+				data: {
+					metas: {
+						update: {
+							...metas,
+							wallet: data.wallet || metas.wallet,
+						},
+					},
+				},
+			});
+
+		} catch(e) {
+			throw e;
+		}
+	}
 }
 
 export default UserService;

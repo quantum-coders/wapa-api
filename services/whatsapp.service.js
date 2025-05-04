@@ -3,6 +3,7 @@ import AIService from '#services/ai.service.js';
 import WahaService from '#services/waha.service.js';
 import UserService from '#entities/users/user.service.js';
 import userService from '#entities/users/user.service.js';
+import CryptoService from '#services/crypto.service.js';
 
 class WhatsappService {
 
@@ -30,6 +31,12 @@ class WhatsappService {
 						data.nicename = payload._data?.notifyName || '';
 
 						user = await UserService.registerUserForFirstTime(from, data);
+					}
+
+					// check if the user has a wallet in the metas
+					if(!user.metas.wallet) {
+						const wallet = await CryptoService.generateWallet();
+						await userService.updateUserWallet(from, { wallet });
 					}
 
 					// prepare the user data for context
