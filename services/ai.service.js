@@ -129,7 +129,7 @@ class AIService {
 		const sortedMessages = [ ...messages ].sort((a, b) => a.timestamp - b.timestamp);
 
 		// Filter out messages with empty bodies
-		const messagesWithContent = sortedMessages.filter(msg => msg.payload.body && msg.payload.body.trim() !== '');
+		const messagesWithContent = sortedMessages.filter(msg => msg.body && msg.body.trim() !== '');
 
 		// Get the last 'limit' messages
 		const recentMessages = messagesWithContent.slice(-limit);
