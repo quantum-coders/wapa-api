@@ -222,7 +222,7 @@ class AIService {
 					console.log('toolResponse', toolResponse);
 
 					// replace %amount% with the actual amount
-					if(toolResponse && toolResponse.amount) {
+					if(toolResponse) {
 						args.continueConversation = args.continueConversation.replace('%amount%', toolResponse.balance + ' ' + toolResponse.symbol);
 					}
 				}
