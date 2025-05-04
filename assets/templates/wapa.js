@@ -38,7 +38,7 @@ const onboardingSchema = {
 				'type': 'string',
 				'description': 'The preferred name of the user for a personalized experience.',
 			},
-			'continue_conversation': {
+			'continueConversation': {
 				'type': 'string',
 				'description': 'A message prompting the user to provide more details or ask further questions.',
 			},
@@ -46,7 +46,7 @@ const onboardingSchema = {
 		'required': [
 			'email',
 			'nicename',
-			'continue_conversation',
+			'continueConversation',
 		],
 		'additionalProperties': false,
 	},
@@ -64,15 +64,15 @@ Tus capacidades incluyen:
 - Permitir al usuario cambiar su información de contacto mediante herramientas específicas
 
 Herramientas disponibles:
-1. change_mail - Permite al usuario cambiar su dirección de correo electrónico
-2. change_nicename - Permite al usuario cambiar su nombre preferido
-3. continue_conversation - Te permite continuar la conversación solicitando más detalles o haciendo preguntas de aclaración
+1. changeMail - Permite al usuario cambiar su dirección de correo electrónico
+2. changeNicename - Permite al usuario cambiar su nombre preferido
+3. continueConversation - Te permite continuar la conversación solicitando más detalles o haciendo preguntas de aclaración
 
 Lineamientos importantes:
 1. Mantén un tono profesional y amigable durante toda la conversación
-2. Si el usuario solicita cambiar su información de contacto, utiliza la herramienta correspondiente (change_mail o change_nicename)
+2. Si el usuario solicita cambiar su información de contacto, utiliza la herramienta correspondiente (changeMail o changeNicename)
 3. Responde preguntas sobre blockchain, criptomonedas y MXNB de Bitso con información precisa y útil
-4. Si necesitas más información o contexto para proporcionar una respuesta completa, utiliza la herramienta continue_conversation
+4. Si necesitas más información o contexto para proporcionar una respuesta completa, utiliza la herramienta continueConversation
 5. Cuando un usuario solicite realizar una transacción, asegúrate de confirmar todos los detalles importantes antes de proceder
 6. Adapta tu lenguaje al nivel de conocimiento técnico del usuario
 7. Prioriza la seguridad y privacidad en todas tus interacciones
@@ -81,14 +81,14 @@ Lineamientos importantes:
 Recuerda que estás facilitando transacciones financieras, por lo que debes ser claro, preciso y siempre mantener la seguridad como prioridad. Si un usuario solicita información que no puedes proporcionar, explica amablemente las limitaciones y ofrece alternativas útiles.
 
 Ejemplo de uso de herramientas:
-- Si el usuario dice "Necesito cambiar mi correo a nuevo@ejemplo.com", utiliza la herramienta change_mail
-- Si el usuario dice "Prefiero que me llamen Carlos en lugar de Juan", utiliza la herramienta change_nicename
-- Si necesitas más detalles sobre una consulta, utiliza continue_conversation`;
+- Si el usuario dice "Necesito cambiar mi correo a nuevo@ejemplo.com", utiliza la herramienta changeMail
+- Si el usuario dice "Prefiero que me llamen Carlos en lugar de Juan", utiliza la herramienta changeNicename
+- Si necesitas más detalles sobre una consulta, utiliza continueConversation`;
 
 const generalTools = [
 	{
 		type: 'function',
-		name: 'change_mail',
+		name: 'changeMail',
 		description: 'Change the email address of the user',
 		parameters: {
 			type: 'object',
@@ -96,6 +96,10 @@ const generalTools = [
 				email: {
 					type: 'string',
 					description: 'The new email address of the user.',
+				},
+				continueConversation: {
+					type: 'string',
+					description: 'A message confirming the email change.',
 				},
 			},
 			required: [ 'email' ],
@@ -105,7 +109,7 @@ const generalTools = [
 	},
 	{
 		type: 'function',
-		name: 'change_nicename',
+		name: 'changeNicename',
 		description: 'Change the preferred name of the user',
 		parameters: {
 			type: 'object',
@@ -113,6 +117,10 @@ const generalTools = [
 				nicename: {
 					type: 'string',
 					description: 'The new preferred name of the user.',
+				},
+				continueConversation: {
+					type: 'string',
+					description: 'A message confirming the email change.',
 				},
 			},
 			required: [ 'nicename' ],
@@ -122,17 +130,17 @@ const generalTools = [
 	},
 	{
 		type: 'function',
-		name: 'continue_conversation',
+		name: 'continueConversation',
 		description: 'Continue the conversation with the user, asking for more details or clarifying questions.',
 		parameters: {
 			type: 'object',
 			properties: {
-				continue_conversation: {
+				continueConversation: {
 					type: 'string',
 					description: 'A message prompting the user to provide more details or ask further questions.',
 				},
 			},
-			required: [ 'continue_conversation' ],
+			required: [ 'continueConversation' ],
 			additionalProperties: false,
 		},
 	},
