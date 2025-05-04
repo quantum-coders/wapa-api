@@ -1,7 +1,8 @@
 import 'dotenv/config';
 import OpenAI from 'openai';
-import * as wapaTemplates from '#assets/templates/wapa.js';
 import ToolService from '#services/tool.service.js';
+
+import * as wapaTemplates from '#assets/templates/wapa.js';
 
 const openai = new OpenAI({
 	apiKey: process.env.OPENAI_API_KEY,
@@ -206,6 +207,7 @@ class AIService {
 
 			console.log('Function name:', name);
 			console.log('Function arguments:', args);
+			console.log('Available methods:', Object.getOwnPropertyNames(ToolService));
 
 			// add from as idWa to the args
 
