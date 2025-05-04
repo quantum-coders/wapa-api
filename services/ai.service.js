@@ -214,7 +214,7 @@ class AIService {
 				console.log('Calling function:', name, 'with args:', args);
 				// add from as idWa to the args
 				args.idWa = from;
-				return await ToolService[name](args);
+				await ToolService[name](args);
 			}
 
 			// check if args contain "continueConversation"
