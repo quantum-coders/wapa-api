@@ -115,7 +115,7 @@ class CryptoService {
 			6,
 		);
 
-		console.log('mxnb', mxnb);
+		console.log('Transacción MXNB', mxnb);
 
 		const eth = await this.sendToken(
 			{
@@ -128,7 +128,7 @@ class CryptoService {
 			18,
 		);
 
-		console.log('eth', eth);
+		console.log('Transacción SETH', eth);
 
 		return { mxnb, eth };
 	}
