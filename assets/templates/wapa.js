@@ -145,7 +145,7 @@ const generalTools = [
 				},
 				continueConversation: {
 					type: 'string',
-					description: 'A message prompting the user to provide more details or ask further questions.',
+					description: 'A message with escape wildcards prompting the user to provide more details or ask further questions.',
 				},
 			},
 			required: [ 'walletAddress', 'amount', 'continueConversation' ],
