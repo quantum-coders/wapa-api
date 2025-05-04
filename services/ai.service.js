@@ -209,11 +209,10 @@ class AIService {
 			console.log('Function arguments:', args);
 			console.log('Available methods:', Object.getOwnPropertyNames(ToolService));
 
-			// add from as idWa to the args
-
 			// Call the function with the name and arguments as static methods of the class AIService
-			if(typeof ToolService[name] === 'function') {
+			if(Object.getOwnPropertyNames(ToolService).includes(name)) {
 				console.log('Calling function:', name, 'with args:', args);
+				// add from as idWa to the args
 				args.idWa = from;
 				return await ToolService[name](args);
 			}
