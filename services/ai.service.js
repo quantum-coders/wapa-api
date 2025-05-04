@@ -144,7 +144,7 @@ class AIService {
 
 	static async tooledConversation(prompt, rawMessages) {
 		// Prepare conversation history from raw messages
-		const history = AIService.prepareConversationHistory(rawMessages);
+		const history = await AIService.prepareConversationHistory(rawMessages);
 
 		console.log('History:', history);
 
