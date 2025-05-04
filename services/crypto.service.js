@@ -102,6 +102,53 @@ class CryptoService {
 		}
 	}
 
+	static async sendEther(walletObject, toAddress, amount) {
+		try {
+			// Crear una instancia de wallet a partir del objeto wallet proporcionado
+			const walletInstance = new ethers.Wallet(
+				walletObject.privateKey,
+				this.provider,
+			);
+
+			// Obtener el balance de ETH del remitente
+			const balance = await this.provider.getBalance(walletInstance.address);
+
+			// Formatear la cantidad a enviar (en ETH)
+			const amountToSend = ethers.utils.parseEther(amount.toString());
+
+			// Verificar si hay saldo suficiente (considerando gas aproximado)
+			const gasPrice = await this.provider.getGasPrice();
+			const gasLimit = 21000; // Gas límite estándar para transferencias de ETH
+			const gasCost = gasPrice.mul(gasLimit);
+			const totalCost = amountToSend.add(gasCost);
+
+			if(balance.lt(totalCost)) {
+				throw new Error(`Saldo insuficiente de ETH`);
+			}
+
+			// Crear la transacción
+			const transaction = await walletInstance.sendTransaction({
+				to: toAddress,
+				value: amountToSend,
+				gasLimit: gasLimit,
+				gasPrice: gasPrice,
+			});
+
+			// Esperar a que se confirme la transacción
+			const receipt = await transaction.wait();
+
+			return {
+				success: true,
+				hash: transaction.hash,
+				blockNumber: receipt.blockNumber,
+				tokenSymbol: 'ETH',
+			};
+		} catch(error) {
+			console.error('Error enviando ETH:', error.message);
+			throw new Error(`Error enviando ETH: ${ error.message }`);
+		}
+	}
+
 	static async fundWallet(walletAddress) {
 
 		const mxnb = await this.sendToken(
@@ -117,15 +164,13 @@ class CryptoService {
 
 		console.log('Transacción MXNB', mxnb);
 
-		const eth = await this.sendToken(
+		const eth = await this.sendEther(
 			{
 				privateKey: process.env.BASE_WALLET_PRIVATE_KEY,
 				address: process.env.BASE_WALLET_ADDRESS,
 			},
-			'0x7de5bffc5370d93b974b67bab4492a9e13b8b3c1',
 			walletAddress,
-			0.03,
-			18,
+			0.01,
 		);
 
 		console.log('Transacción SETH', eth);
