@@ -57,7 +57,7 @@ class WhatsappService {
 					// =================================================================================================
 
 					// Prepare new user context
-					const userData = {
+					userData = {
 						nicename: userData.nicename,
 						email: userData.email,
 					};
