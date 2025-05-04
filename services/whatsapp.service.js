@@ -43,6 +43,7 @@ class WhatsappService {
 					let userData = {
 						nicename: user.nicename,
 						email: user.email,
+						wallet: user.metas.wallet || '',
 					};
 
 					// If we dont have nicename or email, we go to the onboarding service
@@ -67,6 +68,7 @@ class WhatsappService {
 					userData = {
 						nicename: userData.nicename,
 						email: userData.email,
+						wallet: userData.wallet,
 					};
 
 					// first we get the conversation history
