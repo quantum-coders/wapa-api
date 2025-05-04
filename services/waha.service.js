@@ -4,7 +4,7 @@ class WahaService {
 
 	static async sendText(to, message) {
 		try {
-			const url = process.env.WAHA_URL + '/sendText';
+			const url = process.env.WAHA_API_URL + '/sendText';
 
 			const payload = {
 				chatId: to,
