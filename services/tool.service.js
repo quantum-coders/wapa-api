@@ -93,7 +93,7 @@ class ToolService {
 
 			// generate a wallet for the new user
 			const wallet = await CryptoService.generateWallet();
-			await UserService.updateUserWallet(recipient, wallet);
+			await UserService.updateUserWallet(contactNumber, wallet);
 
 			recipientWalletAddress = wallet.wallet.address;
 		} else {
