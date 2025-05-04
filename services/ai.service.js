@@ -206,7 +206,7 @@ class AIService {
 			if(name === 'continue_conversation') {
 				return args.continue_conversation;
 			}
-		} else if(response.output[0].type === '"message"') {
+		} else if(response.output[0].type === 'message') {
 			// If the response is a text, return it
 			return response.output[0].content[0].text;
 		}
