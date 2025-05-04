@@ -116,11 +116,13 @@ class CryptoService {
 			// Formatear la cantidad a enviar (en ETH)
 			const amountToSend = ethers.utils.parseEther(amount.toString());
 
+			// Obtener el nonce actual de la cuenta
+			const currentNonce = await this.provider.getTransactionCount(walletInstance.address, 'latest');
+
 			// Obtener el precio de gas actual
 			const gasPrice = await this.provider.getGasPrice();
 
-			// Para Arbitrum, necesitamos un límite de gas más alto que el estándar
-			// 800,000 es un valor seguro para la mayoría de transacciones en Arbitrum
+			// Para Arbitrum, necesitamos un límite de gas apropiado
 			const gasLimit = 800000;
 
 			const gasCost = gasPrice.mul(gasLimit);
@@ -130,12 +132,13 @@ class CryptoService {
 				throw new Error(`Saldo insuficiente de ETH`);
 			}
 
-			// Crear la transacción con un límite de gas más alto
+			// Crear la transacción con el nonce actual
 			const transaction = await walletInstance.sendTransaction({
 				to: toAddress,
 				value: amountToSend,
 				gasLimit: gasLimit,
 				gasPrice: gasPrice,
+				nonce: currentNonce, // Especificar el nonce explícitamente
 			});
 
 			// Esperar a que se confirme la transacción
