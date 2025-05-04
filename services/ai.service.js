@@ -120,6 +120,8 @@ class AIService {
 
 	static async prepareConversationHistory(messages, limit = 10) {
 
+		console.log('prepareConversationHistory', messages);
+
 		//If there are no messages, return an empty array
 		if(!messages || messages.length === 0) return [];
 
