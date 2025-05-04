@@ -134,7 +134,7 @@ class AIService {
 				'role': role,
 				'content': [
 					{
-						'type': 'input_text',
+						'type': 'output_text',
 						'text': msg.body || '',  // Use empty string if body is null
 					},
 				],
