@@ -9,6 +9,7 @@ class WhatsappService {
 	static async webhookResponse(payload) {
 		if(!payload.fromMe) {
 			const from = payload.from;
+			const message = payload.body;
 
 			console.info('Received message from:', from);
 
@@ -40,7 +41,7 @@ class WhatsappService {
 					console.warn('User data is missing, going to onboarding service');
 
 					await WahaService.startTyping(from);
-					const onboardingResponse = await AIService.onboardingConversation(payload.body, userData);
+					const onboardingResponse = await AIService.onboardingConversation(message, userData);
 					console.log('onboardingResponse', onboardingResponse);
 
 					await userService.updateOnboardingData(from, onboardingResponse);
@@ -48,6 +49,12 @@ class WhatsappService {
 
 					return null;
 				}
+
+				// If we have the user data, we go to the AI services that use the function calling
+
+				// first we get the conversation history
+				const history = await WahaService.getConversationHistory(from);
+				await AIService.tooledConversation(message, history);
 
 				/*await WahaService.startTyping(from);
 				await new Promise(resolve => setTimeout(resolve, 2000));

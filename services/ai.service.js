@@ -117,6 +117,77 @@ class AIService {
 
 		return JSON.parse(response.output_text);
 	}
+
+	static async prepareConversationHistory(messages, limit = 10) {
+		// Sort messages by timestamp in ascending order
+		const sortedMessages = [ ...messages ].sort((a, b) => a.timestamp - b.timestamp);
+
+		// Get the last 'limit' messages
+		const recentMessages = sortedMessages.slice(-limit);
+
+		// Transform messages into the required format for OpenAI API
+		return recentMessages.map(msg => {
+			// Determine the role based on fromMe property
+			const role = msg.fromMe ? 'assistant' : 'user';
+
+			return {
+				'role': role,
+				'content': [
+					{
+						'type': 'input_text',
+						'text': msg.body || '',  // Use empty string if body is null
+					},
+				],
+			};
+		});
+	}
+
+	static async tooledConversation(prompt, rawMessages) {
+		// Prepare conversation history from raw messages
+		const history = AIService.prepareConversationHistory(rawMessages);
+
+		// Create the input array with system message, history, and current prompt
+		const inputArray = [
+			{
+				'role': 'system',
+				'content': [
+					{
+						'type': 'input_text',
+						'text': wapaTemplates.tooledSystemPrompt,
+					},
+				],
+			},
+		];
+
+		// Add history messages to input array
+		inputArray.push(...history);
+
+		// Add current user prompt
+		inputArray.push({
+			'role': 'user',
+			'content': [
+				{
+					'type': 'input_text',
+					'text': prompt,
+				},
+			],
+		});
+
+		const response = await openai.responses.create({
+			model: 'gpt-4.1',
+			input: inputArray,
+			reasoning: {},
+			tools: wapaTemplates.generalTools,
+			temperature: 1,
+			max_output_tokens: 2048,
+			top_p: 1,
+			store: true,
+		});
+
+		console.log('Response:', response);
+
+		return false;
+	}
 }
 
 export default AIService;

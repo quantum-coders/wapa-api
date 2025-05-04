@@ -61,6 +61,19 @@ class WahaService {
 		}
 	}
 
+	static async getConversationHistory(to) {
+		try {
+			const url = process.env.WAHA_API_URL + `/${ process.env.WAHA_SESSION }/chats/${ to }/messages`;
+			const headers = { 'X-Api-Key': process.env.WAHA_API_KEY };
+
+			const response = await axios.get(url, { headers });
+			return response.data;
+		} catch(error) {
+			console.error('Error getting conversation history:', error);
+			throw error;
+		}
+	}
+
 	static async sendImage(to, imageUrl, caption) {
 		try {
 			const url = process.env.WAHA_API_URL + '/sendImage';
