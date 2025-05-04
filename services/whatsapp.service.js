@@ -9,11 +9,41 @@ class WhatsappService {
 		if(!payload.fromMe) {
 			const from = payload.from;
 
+			console.info('Received message from:', from);
+
 			if(from === process.env.WHATSAPP_NUMBER) {
 
-				const user = await UserService.verifyUserExistence(from);
+				console.info('Message from authorized number', process.env.WHATSAPP_NUMBER);
+
+				// Check if the user exists and store it
+				let user = await UserService.verifyUserExistence(from);
+
+				// If the user doesn't exist, register them
 				if(!user) {
-					const user = await UserService.registerUserForFirstTime(from, {});
+					console.warn('User not found, registering for the first time');
+
+					const data = {};
+					data.nicename = payload._data?.notifyName || '';
+
+					user = await UserService.registerUserForFirstTime(from, data);
+				}
+
+				// prepare the user data for context
+				const userData = {
+					nicename: user.nicename,
+					email: user.email,
+				};
+
+				// If we dont have nicename or email, we go to the onboarding service
+				if(!userData.nicename || !userData.email) {
+					console.warn('User data is missing, going to onboarding service');
+
+					await WahaService.startTyping(from);
+					const onboardingResponse = await AIService.onboardingConversation(payload.body, userData);
+					console.log('onboardingResponse', onboardingResponse);
+					await WahaService.sendText(from, onboardingResponse.continue_conversation);
+
+					return null;
 				}
 
 				/*await WahaService.startTyping(from);

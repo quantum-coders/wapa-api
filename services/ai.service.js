@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import OpenAI from 'openai';
+import * as wapaTemplates from '#assets/templates/wapa.js';
 
 const openai = new OpenAI({
 	apiKey: process.env.OPENAI_API_KEY,
@@ -67,6 +68,54 @@ class AIService {
 			n: 1,
 			stop: null,
 		});
+	}
+
+	static async onboardingConversation(prompt, context = {}) {
+		const response = await openai.responses.create({
+			model: 'gpt-4.1',
+			input: [
+				{
+					'role': 'system',
+					'content': [
+						{
+							'type': 'input_text',
+							'text': wapaTemplates.onboardingSystemPrompt,
+						},
+					],
+				},
+				{
+					'role': 'assistant',
+					'content': [
+						{
+							'type': 'output_text',
+							'text': JSON.stringify(context),
+						},
+					],
+				},
+				{
+					'role': 'user',
+					'content': [
+						{
+							'type': 'input_text',
+							'text': prompt,
+						},
+					],
+				},
+			],
+			text: {
+				'format': {
+					...wapaTemplates.onboardingSchema,
+				},
+			},
+			reasoning: {},
+			tools: [],
+			temperature: 1,
+			max_output_tokens: 2048,
+			top_p: 1,
+			store: true,
+		});
+
+		return JSON.parse(response.output_text);
 	}
 }
 
