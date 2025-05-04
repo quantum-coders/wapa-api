@@ -121,7 +121,7 @@ class AIService {
 
 	static async prepareConversationHistory(messages, limit = 10) {
 
-		console.log('prepareConversationHistory', messages);
+		//console.log('prepareConversationHistory', messages);
 
 		//If there are no messages, return an empty array
 		if(!messages || messages.length === 0) return [];
@@ -209,17 +209,17 @@ class AIService {
 
 			// add from as idWa to the args
 
-			// check if args contain "continueConversation"
-			if(args.continueConversation) {
-				// If it does, return the continueConversation message
-				return args.continueConversation;
-			}
-
 			// Call the function with the name and arguments as static methods of the class AIService
 			if(typeof ToolService[name] === 'function') {
 				console.log('Calling function:', name, 'with args:', args);
 				args.idWa = from;
 				return await ToolService[name](args);
+			}
+
+			// check if args contain "continueConversation"
+			if(args.continueConversation) {
+				// If it does, return the continueConversation message
+				return args.continueConversation;
 			}
 
 		} else if(response.output[0].type === 'message') {
