@@ -2,9 +2,12 @@
 
 ![Logo WAPA](https://quantum-bucket.sfo3.digitaloceanspaces.com/wapa-assets/wapa-wallet.png)
 
+Un proyecto desarrollado para el Hackathon de *Eth 5 de mayo* por el equipo Quantum Coders.
+
 ## Descripción
 
-WAPA es una solución innovadora que permite realizar transferencias de MXNB (Pesos Mexicanos Digitales) a través de WhatsApp, haciendo las transacciones financieras más accesibles y sencillas para todos los usuarios.
+WAPA es una solución innovadora que permite realizar transferencias de MXNB (Pesos Mexicanos Digitales) a través de
+WhatsApp, haciendo las transacciones financieras más accesibles y sencillas para todos los usuarios.
 
 ## Características principales
 
@@ -63,11 +66,12 @@ Este proyecto está construido con:
 - ethers.js
 - MXNB Smart Contract
 
-Los desarrolladores interesados en contribuir pueden revisar nuestro repositorio en GitHub y seguir las guías de contribución.
+Los desarrolladores interesados en contribuir pueden revisar nuestro repositorio en GitHub y seguir las guías de
+contribución.
 
 ## Licencia
 
-Este proyecto está bajo la licencia MIT. Consulta el archivo LICENSE para más detalles.
+Este proyecto está bajo la licencia MIT.
 
 ---
 
