@@ -139,16 +139,12 @@ const generalTools = [
 					type: 'string',
 					description: 'The wallet address of the user.',
 				},
-				amount: {
-					type: 'number',
-					description: 'The amount to be sent.',
-				},
 				continueConversation: {
 					type: 'string',
-					description: 'A message with escape wildcards prompting the user to provide more details or ask further questions.',
+					description: 'A natural message with the %amount% escape wildcard, which will be replaced with the actual amount.',
 				},
 			},
-			required: [ 'walletAddress', 'amount', 'continueConversation' ],
+			required: [ 'walletAddress', 'continueConversation' ],
 			additionalProperties: false,
 		},
 	},

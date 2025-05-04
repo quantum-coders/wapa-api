@@ -200,6 +200,8 @@ class AIService {
 
 		//console.log('Response:', JSON.stringify(response, null, 2));
 
+		let toolResponse = null;
+
 		if(response.output[0].type === 'function_call') {
 			// JSON encode arguments
 			const name = response.output[0].name;
@@ -214,7 +216,11 @@ class AIService {
 				console.log('Calling function:', name, 'with args:', args);
 				// add from as idWa to the args
 				args.idWa = from;
-				await ToolService[name](args);
+				toolResponse = await ToolService[name](args);
+
+				if(name === 'getWalletBalance') {
+					console.log('toolResponse', toolResponse);
+				}
 			}
 
 			// check if args contain "continueConversation"
