@@ -197,12 +197,15 @@ class AIService {
 			store: true,
 		});
 
-		console.log('Response:', JSON.stringify(response, null, 2));
+		//console.log('Response:', JSON.stringify(response, null, 2));
 
 		if(response.output[0].type === 'function_call') {
 			// JSON encode arguments
 			const name = response.output[0].name;
 			const args = JSON.parse(response.output[0].arguments);
+
+			console.log('Function name:', name);
+			console.log('Function arguments:', args);
 
 			// add from as idWa to the args
 
@@ -225,6 +228,11 @@ class AIService {
 		}
 
 		return false;
+	}
+
+	static async resolveCheck(prompt) {
+
+
 	}
 }
 
