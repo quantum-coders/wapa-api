@@ -128,7 +128,7 @@ class AIService {
 		// Transform messages into the required format for OpenAI API
 		return recentMessages.map(msg => {
 			// Determine the role based on fromMe property
-			const role = msg.fromMe ? 'assistant' : 'user';
+			const role = msg.fromMe ? 'user' : 'assistant';
 			const type = msg.fromMe ? 'input_text' : 'output_text';
 
 			return {
@@ -147,7 +147,7 @@ class AIService {
 		// Prepare conversation history from raw messages
 		const history = await AIService.prepareConversationHistory(rawMessages);
 
-		console.log('History:', history);
+		console.log('History:', JSON.stringify(history, null, 2));
 
 		// Create the input array with system message, history, and current prompt
 		const inputArray = [
