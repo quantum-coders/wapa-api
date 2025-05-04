@@ -67,7 +67,7 @@ class ToolService {
 		const contactName = contact.name;
 		if(!contactName) throw new Error('Contact name is required');
 
-		const contactNumber = contact.number;
+		const contactNumber = contact.phoneNumber;
 
 		const user = await primate.prisma.user.findFirst({ where: { idWa: funcArgs.idWa } });
 		if(!user) throw new Error('User not found');
