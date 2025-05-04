@@ -119,6 +119,10 @@ class AIService {
 	}
 
 	static async prepareConversationHistory(messages, limit = 10) {
+
+		//If there are no messages, return an empty array
+		if(!messages || messages.length === 0) return [];
+
 		// Sort messages by timestamp in ascending order
 		const sortedMessages = [ ...messages ].sort((a, b) => a.timestamp - b.timestamp);
 
