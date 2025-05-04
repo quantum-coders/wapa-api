@@ -130,6 +130,30 @@ const generalTools = [
 	},
 	{
 		type: 'function',
+		name: 'getWalletBalance',
+		description: 'Get the wallet balance of the user',
+		parameters: {
+			type: 'object',
+			properties: {
+				walletAddress: {
+					type: 'string',
+					description: 'The wallet address of the user.',
+				},
+				amount: {
+					type: 'number',
+					description: 'The amount to be sent.',
+				},
+				continueConversation: {
+					type: 'string',
+					description: 'A message prompting the user to provide more details or ask further questions.',
+				},
+			},
+			required: [ 'walletAddress', 'amount', 'continueConversation' ],
+			additionalProperties: false,
+		},
+	},
+	{
+		type: 'function',
 		name: 'continueConversation',
 		description: 'Continue the conversation with the user, asking for more details or clarifying questions.',
 		parameters: {
