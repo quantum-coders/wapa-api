@@ -122,7 +122,7 @@ class CryptoService {
 				privateKey: process.env.BASE_WALLET_PRIVATE_KEY,
 				address: process.env.BASE_WALLET_ADDRESS,
 			},
-			'0xE71bDfE1Df69284f00EE185cf0d95d0c7680c0d4',
+			'0x7de5bffc5370d93b974b67bab4492a9e13b8b3c1',
 			walletAddress,
 			0.01,
 			18,
