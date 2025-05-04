@@ -89,13 +89,14 @@ class ToolService {
 		console.info('Recipient:', recipient);
 
 		if(!recipient) {
-			recipient = await UserService.registerUserForFirstTime(contactNumber, { nicename: contactName });
+			await UserService.registerUserForFirstTime(contactNumber, { nicename: contactName });
 
 			// generate a wallet for the new user
 			const wallet = await CryptoService.generateWallet();
-			await UserService.updateUserWallet(contactNumber, wallet);
+			console.log('New wallet:', wallet);
 
-			recipientWalletAddress = wallet.wallet.address;
+			await UserService.updateUserWallet(contactNumber, wallet);
+			recipientWalletAddress = wallet.address;
 		} else {
 			recipientWalletAddress = recipient.metas.wallet.address;
 		}
