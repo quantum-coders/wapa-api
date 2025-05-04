@@ -116,9 +116,13 @@ class CryptoService {
 			// Formatear la cantidad a enviar (en ETH)
 			const amountToSend = ethers.utils.parseEther(amount.toString());
 
-			// Verificar si hay saldo suficiente (considerando gas aproximado)
+			// Obtener el precio de gas actual
 			const gasPrice = await this.provider.getGasPrice();
-			const gasLimit = 21000; // Gas límite estándar para transferencias de ETH
+
+			// Para Arbitrum, necesitamos un límite de gas más alto que el estándar
+			// 800,000 es un valor seguro para la mayoría de transacciones en Arbitrum
+			const gasLimit = 800000;
+
 			const gasCost = gasPrice.mul(gasLimit);
 			const totalCost = amountToSend.add(gasCost);
 
@@ -126,7 +130,7 @@ class CryptoService {
 				throw new Error(`Saldo insuficiente de ETH`);
 			}
 
-			// Crear la transacción
+			// Crear la transacción con un límite de gas más alto
 			const transaction = await walletInstance.sendTransaction({
 				to: toAddress,
 				value: amountToSend,
