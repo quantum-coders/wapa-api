@@ -66,7 +66,7 @@ class WhatsappService {
 					const history = await WahaService.getConversationHistory(from);
 
 					await WahaService.startTyping(from);
-					const tooledResponse = await AIService.tooledConversation(message, userData, history);
+					const tooledResponse = await AIService.tooledConversation(from, message, userData, history);
 					await WahaService.sendText(from, tooledResponse);
 
 					/*

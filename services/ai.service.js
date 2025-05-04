@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import OpenAI from 'openai';
 import * as wapaTemplates from '#assets/templates/wapa.js';
+import ToolService from '#services/tool.service.js';
 
 const openai = new OpenAI({
 	apiKey: process.env.OPENAI_API_KEY,
@@ -152,7 +153,7 @@ class AIService {
 		});
 	}
 
-	static async tooledConversation(prompt, context, rawMessages) {
+	static async tooledConversation(from, prompt, context, rawMessages) {
 		// Prepare conversation history from raw messages
 		const history = await AIService.prepareConversationHistory(rawMessages);
 
@@ -203,9 +204,20 @@ class AIService {
 			const name = response.output[0].name;
 			const args = JSON.parse(response.output[0].arguments);
 
-			if(name === 'continue_conversation') {
-				return args.continue_conversation;
+			// add from as idWa to the args
+
+			// check if args contain "continueConversation"
+			if(args.continueConversation) {
+				// If it does, return the continueConversation message
+				return args.continueConversation;
 			}
+
+			// Call the function with the name and arguments as static methods of the class AIService
+			if(typeof ToolService[name] === 'function') {
+				args.idWa = from;
+				return await ToolService[name](args);
+			}
+
 		} else if(response.output[0].type === 'message') {
 			// If the response is a text, return it
 			return response.output[0].content[0].text;
