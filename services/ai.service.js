@@ -236,7 +236,7 @@ class AIService {
 						if(toolResponse) {
 
 							// transaction details
-							const transactionDetails = `Link: https://sepolia.arbiscan.io/token/${ toolResponse.transaction.hash }`;
+							const transactionDetails = `Link: https://sepolia.arbiscan.io/tx/${ toolResponse.transaction.hash }`;
 
 							args.continueConversation = args.continueConversation.replace('%amount%', toolResponse.amount);
 							args.continueConversation = args.continueConversation.replace('%name%', toolResponse.contactName);
