@@ -299,10 +299,8 @@ class UserService {
 				where: { id: user.id },
 				data: {
 					metas: {
-						update: {
-							...metas,
-							wallet: data.wallet || metas.wallet,
-						},
+						...metas,
+						wallet: data.wallet || metas.wallet,
 					},
 				},
 			});
