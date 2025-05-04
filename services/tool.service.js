@@ -112,17 +112,23 @@ class ToolService {
 
 		console.info('Recipient wallet address:', recipientWalletAddress);
 
-		// send the money
-		const sendMoney = await CryptoService.sendToken(
-			{
-				privateKey: user.metas.wallet.privateKey,
-				address: user.metas.wallet.address,
-			},
-			'0x82b9e52b26a2954e113f94ff26647754d5a4247d',
-			recipientWalletAddress,
-			amount,
-			6,
-		);
+		try {
+
+			// send the money
+			const sendMoney = await CryptoService.sendToken(
+				{
+					privateKey: user.metas.wallet.privateKey,
+					address: user.metas.wallet.address,
+				},
+				'0x82b9e52b26a2954e113f94ff26647754d5a4247d',
+				recipientWalletAddress,
+				amount,
+				6,
+			);
+		} catch(e) {
+			console.error('Error sending money:', e);
+			throw new Error('Error sending money');
+		}
 
 		console.info('Transaction result:', sendMoney);
 

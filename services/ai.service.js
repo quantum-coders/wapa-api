@@ -216,30 +216,36 @@ class AIService {
 				console.log('Calling function:', name, 'with args:', args);
 				// add from as idWa to the args
 				args.idWa = from;
-				toolResponse = await ToolService[name](args);
 
-				if(name === 'getWalletBalance') {
-					console.log('toolResponse', toolResponse);
+				try {
+					toolResponse = await ToolService[name](args);
 
-					// replace %amount% with the actual amount
-					if(toolResponse) {
-						args.continueConversation = args.continueConversation.replace('%amount%', toolResponse.balance);
+					if(name === 'getWalletBalance') {
+						console.log('toolResponse', toolResponse);
+
+						// replace %amount% with the actual amount
+						if(toolResponse) {
+							args.continueConversation = args.continueConversation.replace('%amount%', toolResponse.balance);
+						}
 					}
-				}
 
-				if(name === 'sendMoney') {
-					console.log('toolResponse', toolResponse);
+					if(name === 'sendMoney') {
+						console.log('toolResponse', toolResponse);
 
-					// replace %amount% with the actual amount
-					if(toolResponse) {
+						// replace %amount% with the actual amount
+						if(toolResponse) {
 
-						// transaction details
-						const transactionDetails = `Link: https://sepolia.arbiscan.io/token/${ toolResponse.transaction.hash }`;
+							// transaction details
+							const transactionDetails = `Link: https://sepolia.arbiscan.io/token/${ toolResponse.transaction.hash }`;
 
-						args.continueConversation = args.continueConversation.replace('%amount%', toolResponse.amount);
-						args.continueConversation = args.continueConversation.replace('%name%', toolResponse.contactName);
-						args.continueConversation = args.continueConversation.replace('%transaction_details%', '\n\n' + JSON.stringify(toolResponse.transaction, null, 2));
+							args.continueConversation = args.continueConversation.replace('%amount%', toolResponse.amount);
+							args.continueConversation = args.continueConversation.replace('%name%', toolResponse.contactName);
+							args.continueConversation = args.continueConversation.replace('%transaction_details%', '\n\n' + JSON.stringify(toolResponse.transaction, null, 2));
+						}
 					}
+				} catch(e) {
+					console.error('Error calling function:', e);
+					args.continueConversation = 'Lo siento, hubo un error al procesar tu solicitud. Por favor intenta de nuevo más tarde.';
 				}
 			}
 
