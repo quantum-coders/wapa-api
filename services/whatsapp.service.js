@@ -7,6 +7,8 @@ class WhatsappService {
 	static async webhookResponse(payload) {
 		if(!payload.fromMe) {
 			const from = payload.from;
+
+			console.log(payload);
 		}
 
 		return null;
