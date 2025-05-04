@@ -25,6 +25,42 @@ class WahaService {
 		}
 	}
 
+	static async startTyping(to) {
+		try {
+			const url = process.env.WAHA_API_URL + '/startTyping';
+
+			const payload = {
+				chatId: to,
+				session: process.env.WAHA_SESSION,
+			};
+
+			const headers = { 'X-Api-Key': process.env.WAHA_API_KEY };
+
+			return axios.post(url, payload, { headers });
+		} catch(error) {
+			console.error('Error starting typing:', error);
+			throw error;
+		}
+	}
+
+	static async stopTyping(to) {
+		try {
+			const url = process.env.WAHA_API_URL + '/stopTyping';
+
+			const payload = {
+				chatId: to,
+				session: process.env.WAHA_SESSION,
+			};
+
+			const headers = { 'X-Api-Key': process.env.WAHA_API_KEY };
+
+			return axios.post(url, payload, { headers });
+		} catch(error) {
+			console.error('Error stopping typing:', error);
+			throw error;
+		}
+	}
+
 	static async sendImage(to, imageUrl, caption) {
 		try {
 			const url = process.env.WAHA_API_URL + '/sendImage';
