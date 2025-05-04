@@ -129,12 +129,13 @@ class AIService {
 		return recentMessages.map(msg => {
 			// Determine the role based on fromMe property
 			const role = msg.fromMe ? 'assistant' : 'user';
+			const type = msg.fromMe ? 'input_text' : 'output_text';
 
 			return {
 				'role': role,
 				'content': [
 					{
-						'type': 'output_text',
+						'type': type,
 						'text': msg.body || '',  // Use empty string if body is null
 					},
 				],
