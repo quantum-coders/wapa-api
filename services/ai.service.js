@@ -232,7 +232,40 @@ class AIService {
 
 	static async resolveCheck(prompt) {
 
-
+		return openai.responses.create({
+			model: 'gpt-4.1',
+			input: [
+				{
+					'role': 'system',
+					'content': [
+						{
+							'type': 'input_text',
+							'text': 'You are an expert fact checker and your job is to receive the content of twitter posts and validate if the content is susceptible to fact check.\n\nYou will respond:\n1. `result`: true if the tweet content is susceptible to fact checking, false if not.\n2. `reason`: The reason for your answer\n\nRespond in JSON Format.',
+						},
+					],
+				},
+				{
+					'role': 'user',
+					'content': [
+						{
+							'type': 'input_text',
+							'text': prompt,
+						},
+					],
+				},
+			],
+			text: {
+				'format': {
+					'type': 'json_object',
+				},
+			},
+			reasoning: {},
+			tools: [],
+			temperature: 1,
+			max_output_tokens: 2048,
+			top_p: 1,
+			store: true,
+		});
 	}
 }
 
