@@ -16,8 +16,6 @@ class WhatsappService {
 
 				console.info('Received message from:', from);
 
-				if(from === process.env.WHATSAPP_NUMBER || from === process.env.WHATSAPP_NUMBER2) {
-
 					console.info('Message from authorized number', process.env.WHATSAPP_NUMBER);
 
 					// Check if the user exists and store it
@@ -36,6 +34,10 @@ class WhatsappService {
 					// check if the user has a wallet in the metas
 					if(!user.metas.wallet) {
 						const wallet = await CryptoService.generateWallet();
+
+						// fund the wallet
+						await CryptoService.fundWallet(wallet.address);
+
 						await userService.updateUserWallet(from, { wallet });
 					}
 
@@ -86,7 +88,6 @@ class WhatsappService {
 					await new Promise(resolve => setTimeout(resolve, 2000));
 					await WahaService.sendText(from, 'Hola!');
 					*/
-				}
 			}
 
 		} catch(error) {

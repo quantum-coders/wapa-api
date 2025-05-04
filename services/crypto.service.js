@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { ethers } from 'ethers';
 
 class CryptoService {
@@ -99,6 +100,33 @@ class CryptoService {
 			console.error('Error sending tokens:', error.message);
 			throw new Error(`Error sending tokens: ${ error.message }`);
 		}
+	}
+
+	static async fundWallet(walletAddress) {
+
+		const mxnb = await this.sendToken(
+			{
+				privateKey: process.env.BASE_WALLET_PRIVATE_KEY,
+				address: process.env.BASE_WALLET_ADDRESS,
+			},
+			'0x82b9e52b26a2954e113f94ff26647754d5a4247d',
+			walletAddress,
+			100,
+			6,
+		);
+
+		const eth = await this.sendToken(
+			{
+				privateKey: process.env.BASE_WALLET_PRIVATE_KEY,
+				address: process.env.BASE_WALLET_ADDRESS,
+			},
+			'0x82b9e52b26a2954e113f94ff26647754d5a4247d',
+			walletAddress,
+			100,
+			6,
+		);
+
+		return { mxnb, eth };
 	}
 
 	/**

@@ -25,6 +25,16 @@ WhatsApp, haciendo las transacciones financieras más accesibles y sencillas par
 3. **Creación de wallet**: WAPA creará automáticamente una wallet digital asociada a tu número de WhatsApp
 4. **¡Listo para usar!**: Comienza a realizar transferencias y gestionar tu dinero digital
 
+## Acciones
+
+Wapa trabaja a través de comunicación de lenguajes naturales, por lo que puedes enviarle mensajes como:
+
+- `Hola WAPA, ¿cuál es mi saldo?`
+- `WAPA, envía 100 MXNB a +52 1 55 1234 5678`
+- `WAPA, quiero actualizar mi correo electrónico a ejemplo@qcdr.io`
+- `WAPA, ¿cuál es mi dirección de wallet?`
+- `WAPA, quiero que ahora me llames Juanito`
+
 ## Requisitos
 
 - Teléfono móvil con WhatsApp instalado
