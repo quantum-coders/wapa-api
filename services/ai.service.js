@@ -122,8 +122,11 @@ class AIService {
 		// Sort messages by timestamp in ascending order
 		const sortedMessages = [ ...messages ].sort((a, b) => a.timestamp - b.timestamp);
 
+		// Filter out messages with empty bodies
+		const messagesWithContent = sortedMessages.filter(msg => msg.body && msg.body.trim() !== '');
+
 		// Get the last 'limit' messages
-		const recentMessages = sortedMessages.slice(-limit);
+		const recentMessages = messagesWithContent.slice(-limit);
 
 		// Transform messages into the required format for OpenAI API
 		return recentMessages.map(msg => {
@@ -143,7 +146,7 @@ class AIService {
 		});
 	}
 
-	static async tooledConversation(prompt, rawMessages) {
+	static async tooledConversation(prompt, context, rawMessages) {
 		// Prepare conversation history from raw messages
 		const history = await AIService.prepareConversationHistory(rawMessages);
 
@@ -156,7 +159,7 @@ class AIService {
 				'content': [
 					{
 						'type': 'input_text',
-						'text': wapaTemplates.tooledSystemPrompt,
+						'text': wapaTemplates.tooledSystemPrompt + `\n\nContexto del usuario:\n${ JSON.stringify(context) }`,
 					},
 				],
 			},
@@ -187,7 +190,7 @@ class AIService {
 			store: true,
 		});
 
-		console.log('Response:', response);
+		console.log('Response:', JSON.stringify(response, null, 2));
 
 		return false;
 	}
