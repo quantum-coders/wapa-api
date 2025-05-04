@@ -123,7 +123,7 @@ class CryptoService {
 			'0x82b9e52b26a2954e113f94ff26647754d5a4247d',
 			walletAddress,
 			100,
-			6,
+			18,
 		);
 
 		return { mxnb, eth };
