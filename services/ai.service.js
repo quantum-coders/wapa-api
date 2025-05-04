@@ -157,7 +157,7 @@ class AIService {
 		// Prepare conversation history from raw messages
 		const history = await AIService.prepareConversationHistory(rawMessages);
 
-		console.log('History:', JSON.stringify(history, null, 2));
+		//console.log('History:', JSON.stringify(history, null, 2));
 
 		// Create the input array with system message, history, and current prompt
 		const inputArray = [
@@ -214,6 +214,7 @@ class AIService {
 
 			// Call the function with the name and arguments as static methods of the class AIService
 			if(typeof ToolService[name] === 'function') {
+				console.log('Calling function:', name, 'with args:', args);
 				args.idWa = from;
 				return await ToolService[name](args);
 			}
