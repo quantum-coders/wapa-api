@@ -240,7 +240,7 @@ class AIService {
 
 							args.continueConversation = args.continueConversation.replace('%amount%', toolResponse.amount);
 							args.continueConversation = args.continueConversation.replace('%name%', toolResponse.contactName);
-							args.continueConversation = args.continueConversation.replace('%transaction_details%', '\n\n' + JSON.stringify(toolResponse.transaction, null, 2));
+							args.continueConversation = args.continueConversation.replace('%transaction_details%', '\n\n' + transactionDetails);
 						}
 					}
 				} catch(e) {
