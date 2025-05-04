@@ -55,6 +55,9 @@ class ToolService {
 	}
 
 	static async sendMoney(funcArgs) {
+
+		console.info('Send money function called with args:', funcArgs);
+
 		const amount = funcArgs.amount;
 		if(!amount) throw new Error('Amount is required');
 
@@ -73,9 +76,13 @@ class ToolService {
 		const balance = await CryptoService.getTokenBalance(user.metas.wallet.address, '0x82b9e52b26a2954e113f94ff26647754d5a4247d', 6);
 		if(balance.balance < amount) throw new Error('Insufficient balance');
 
+		console.info('User balance:', balance);
+
 		// Check if the recipient is a user
 		let recipient = await primate.prisma.user.findFirst({ where: { idWa: contactNumber } });
 		let recipientWalletAddress = null;
+
+		console.info('Recipient:', recipient);
 
 		if(!recipient) {
 			recipient = await UserService.registerUserForFirstTime(contactNumber, { nicename: contactName });
@@ -89,8 +96,10 @@ class ToolService {
 			recipientWalletAddress = recipient.metas.wallet.address;
 		}
 
+		console.info('Recipient wallet address:', recipientWalletAddress);
+
 		// send the money
-		return await CryptoService.sendToken(
+		const sendMoney = await CryptoService.sendToken(
 			{
 				privateKey: user.metas.wallet.privateKey,
 				address: user.metas.wallet.address,
@@ -100,6 +109,10 @@ class ToolService {
 			amount,
 			6,
 		);
+
+		console.info('Transaction result:', sendMoney);
+
+		return { transaction: sendMoney, amount, contactName, contactNumber };
 	}
 }
 

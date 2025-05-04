@@ -226,6 +226,16 @@ class AIService {
 						args.continueConversation = args.continueConversation.replace('%amount%', toolResponse.balance + ' ' + toolResponse.symbol);
 					}
 				}
+
+				if(name === 'sendMoney') {
+					console.log('toolResponse', toolResponse);
+
+					// replace %amount% with the actual amount
+					if(toolResponse) {
+						args.continueConversation = args.continueConversation.replace('%amount%', toolResponse.amount + ' MXNB');
+						args.continueConversation = args.continueConversation.replace('%name%', toolResponse.contactName);
+					}
+				}
 			}
 
 			// check if args contain "continueConversation"
