@@ -146,6 +146,8 @@ class AIService {
 		// Prepare conversation history from raw messages
 		const history = AIService.prepareConversationHistory(rawMessages);
 
+		console.log('History:', history);
+
 		// Create the input array with system message, history, and current prompt
 		const inputArray = [
 			{
