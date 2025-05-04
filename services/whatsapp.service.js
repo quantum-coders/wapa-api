@@ -43,7 +43,7 @@ class WhatsappService {
 					const onboardingResponse = await AIService.onboardingConversation(payload.body, userData);
 					console.log('onboardingResponse', onboardingResponse);
 
-					await userService.updateOnboardingData(onboardingResponse);
+					await userService.updateOnboardingData(from, onboardingResponse);
 					await WahaService.sendText(from, onboardingResponse.continue_conversation);
 
 					return null;
