@@ -122,7 +122,7 @@ class CryptoService {
 			},
 			'0xE71bDfE1Df69284f00EE185cf0d95d0c7680c0d4',
 			walletAddress,
-			100,
+			0.01,
 			18,
 		);
 
