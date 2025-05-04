@@ -46,6 +46,28 @@ class AIService {
 
 		return response.output[0].content[0].text;
 	}
+
+	static templateResponse(message, system, history = []) {
+		return openai.chat.completions.create({
+			model: 'gpt-4.1',
+			messages: [
+				{
+					role: 'system',
+					content: system,
+				},
+				...history,
+				{
+					role: 'user',
+					content: message,
+				},
+			],
+			temperature: 1,
+			max_tokens: 2048,
+			top_p: 1,
+			n: 1,
+			stop: null,
+		});
+	}
 }
 
 export default AIService;

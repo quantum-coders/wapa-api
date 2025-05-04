@@ -12,12 +12,7 @@ class WhatsAppController {
 			const payload = req.body.payload;
 
 			if(event === 'message.any') {
-
-				console.log('EVENT', event);
-				console.log('FROM', payload.from);
-				console.log('TO', payload.to);
-
-				const response = await WhatsappService.aiResponse(payload);
+				const response = await WhatsappService.webhookResponse(payload);
 
 				return res.respond({
 					data: response,
