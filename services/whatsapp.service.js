@@ -67,7 +67,10 @@ class WhatsappService {
 
 					await WahaService.startTyping(from);
 					const tooledResponse = await AIService.tooledConversation(from, message, userData, history);
+					console.log('tooledResponse', tooledResponse);
+
 					await WahaService.sendText(from, tooledResponse);
+					await WahaService.stopTyping(from);
 
 					/*
 					await WahaService.startTyping(from);

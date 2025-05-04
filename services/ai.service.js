@@ -219,6 +219,8 @@ class AIService {
 
 			// check if args contain "continueConversation"
 			if(args.continueConversation) {
+				console.log('continueConversation:', args.continueConversation);
+
 				// If it does, return the continueConversation message
 				return args.continueConversation;
 			}
