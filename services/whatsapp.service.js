@@ -2,6 +2,7 @@ import 'dotenv/config';
 import AIService from '#services/ai.service.js';
 import WahaService from '#services/waha.service.js';
 import UserService from '#entities/users/user.service.js';
+import userService from '#entities/users/user.service.js';
 
 class WhatsappService {
 
@@ -41,6 +42,8 @@ class WhatsappService {
 					await WahaService.startTyping(from);
 					const onboardingResponse = await AIService.onboardingConversation(payload.body, userData);
 					console.log('onboardingResponse', onboardingResponse);
+
+					await userService.updateOnboardingData(onboardingResponse);
 					await WahaService.sendText(from, onboardingResponse.continue_conversation);
 
 					return null;

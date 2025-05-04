@@ -263,6 +263,30 @@ class UserService {
 			throw e;
 		}
 	}
+
+	static async updateOnboardingData(idWa, data) {
+		try {
+			// Business Logic
+			data.idWa = idWa;
+
+			// find user
+			const user = await primate.prisma.user.findFirst({ where: { idWa } });
+			if(!user) throw new Error('User not found');
+
+			// update user
+			const updatedUser = await primate.prisma.user.update({
+				where: { id: user.id },
+				data: {
+					nicename: data.nicename || user.nicename,
+					email: data.email || user.email,
+					username: data.username || data.email || user.username,
+				},
+			});
+
+		} catch(e) {
+			throw e;
+		}
+	}
 }
 
 export default UserService;
