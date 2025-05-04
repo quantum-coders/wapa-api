@@ -150,6 +150,42 @@ const generalTools = [
 	},
 	{
 		type: 'function',
+		name: 'sendMoney',
+		description: 'Send money to a contact using their phone number. If any of the parameters are missing, ask the user for them. If the contact is missing, ask the user to share a contact card.',
+		parameters: {
+			type: 'object',
+			properties: {
+				amount: {
+					type: 'number',
+					description: 'The amount of money to send.',
+				},
+				contact: {
+					type: 'object',
+					properties: {
+						name: {
+							type: 'string',
+							description: 'The name of the recipient.',
+						},
+						phoneNumber: {
+							type: 'string',
+							description: 'The phone number of the recipient.',
+						},
+					},
+					required: [ 'name', 'phoneNumber' ],
+					additionalProperties: false,
+				},
+				continueConversation: {
+					type: 'string',
+					description: 'A message confirming the transaction, using %amount% and %name% as placeholders.',
+				},
+			},
+			required: [ 'amount', 'contact', 'continueConversation' ],
+			additionalProperties: false,
+		},
+		strict: true,
+	},
+	{
+		type: 'function',
 		name: 'continueConversation',
 		description: 'Continue the conversation with the user, asking for more details or clarifying questions.',
 		parameters: {

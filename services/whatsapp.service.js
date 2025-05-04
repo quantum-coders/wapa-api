@@ -16,7 +16,7 @@ class WhatsappService {
 
 				console.info('Received message from:', from);
 
-				if(from === process.env.WHATSAPP_NUMBER) {
+				if(from === process.env.WHATSAPP_NUMBER || from === process.env.WHATSAPP_NUMBER2) {
 
 					console.info('Message from authorized number', process.env.WHATSAPP_NUMBER);
 

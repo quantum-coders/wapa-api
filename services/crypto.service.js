@@ -26,18 +26,20 @@ class CryptoService {
 
 	/**
 	 * Sends tokens from one wallet to another.
-	 * @param {string|Object} wallet - Wallet or private key of the sender
+	 * @param {Object} walletObject - Wallet object containing private key
 	 * @param {string} tokenAddress - Address of the token contract
 	 * @param {string} toAddress - Address of the recipient
 	 * @param {string|number} amount - Amount of tokens to send
 	 * @param {number} decimals - Decimals of the token (optional)
 	 * @returns {Object} - Transaction details
 	 */
-	static async sendToken(wallet, tokenAddress, toAddress, amount, decimals = 18) {
+	static async sendToken(walletObject, tokenAddress, toAddress, amount, decimals = 18) {
 		try {
-			const walletInstance = typeof wallet === 'string'
-				? new ethers.Wallet(wallet, this.provider)
-				: wallet;
+			// Create a wallet instance from the provided wallet object
+			const walletInstance = new ethers.Wallet(
+				walletObject.privateKey,
+				this.provider,
+			);
 
 			// Minimal ABI to interact with ERC20 tokens
 			const erc20Abi = [
