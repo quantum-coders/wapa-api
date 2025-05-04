@@ -176,7 +176,7 @@ const generalTools = [
 						},
 						phoneNumber: {
 							type: 'string',
-							description: 'The phone number of the recipient.',
+							description: 'The phone number of the recipient. Always formatted for WhatsApp. Example: 5212345678901@c.us',
 						},
 					},
 					required: [ 'name', 'phoneNumber' ],
