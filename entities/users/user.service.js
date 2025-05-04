@@ -240,6 +240,29 @@ class UserService {
 		return { user, accessToken };
 	}
 
+	static async verifyUserExistence(idWa) {
+		try {
+			const user = await primate.prisma.user.findFirst({ where: { idWa } });
+			if(!user) return null;
+
+			return user;
+		} catch(e) {
+			throw e;
+		}
+	}
+
+	static async registerUserForFirstTime(idWa, data) {
+		try {
+			// Business Logic
+			data.idWa = idWa;
+			data.email = idWa;
+
+			// Primate Create
+			return await UserService.create(data);
+		} catch(e) {
+			throw e;
+		}
+	}
 }
 
 export default UserService;

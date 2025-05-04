@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import AIService from '#services/ai.service.js';
 import WahaService from '#services/waha.service.js';
+import UserService from '#entities/users/user.service.js';
 
 class WhatsappService {
 
@@ -10,11 +11,14 @@ class WhatsappService {
 
 			if(from === process.env.WHATSAPP_NUMBER) {
 
-				console.log(payload);
+				const user = await UserService.verifyUserExistence(from);
+				if(!user) {
+					const user = await UserService.registerUserForFirstTime(from, {});
+				}
 
-				await WahaService.startTyping(from);
+				/*await WahaService.startTyping(from);
 				await new Promise(resolve => setTimeout(resolve, 2000));
-				await WahaService.sendText(from, 'Hola!');
+				await WahaService.sendText(from, 'Hola!');*/
 			}
 		}
 

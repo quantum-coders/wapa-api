@@ -15,6 +15,7 @@ model User {
   uid       String   @unique @default(cuid())
   username  String   @unique
   email     String   @unique
+  idWa      String?  @unique @map("id_wa")
   firstname String?
   lastname  String?
   nicename  String
