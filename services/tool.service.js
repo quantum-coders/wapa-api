@@ -111,11 +111,12 @@ class ToolService {
 		}
 
 		console.info('Recipient wallet address:', recipientWalletAddress);
+		let sendMoney;
 
 		try {
 
 			// send the money
-			const sendMoney = await CryptoService.sendToken(
+			sendMoney = await CryptoService.sendToken(
 				{
 					privateKey: user.metas.wallet.privateKey,
 					address: user.metas.wallet.address,
