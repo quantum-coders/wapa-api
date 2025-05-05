@@ -10,6 +10,11 @@ const openai = new OpenAI({
 
 class AIService {
 
+	/**
+	 * Generates a cool response to a message.
+	 * @param message {string} - The message to respond to.
+	 * @return {Promise<string>} - The generated response.
+	 */
 	static async coolResponse(message) {
 
 		const response = await openai.responses.create({
@@ -50,6 +55,13 @@ class AIService {
 		return response.output[0].content[0].text;
 	}
 
+	/**
+	 * Generates a response to a message using a template.
+	 * @param message {string} - The message to respond to.
+	 * @param system {string} - The system prompt to use.
+	 * @param history {Array} - The conversation history.
+	 * @return {Promise<Object>} - The generated response.
+	 */
 	static templateResponse(message, system, history = []) {
 		return openai.chat.completions.create({
 			model: 'gpt-4.1',
@@ -72,6 +84,12 @@ class AIService {
 		});
 	}
 
+	/**
+	 * Generates a response to a message using the onboarding conversation template.
+	 * @param prompt {string} - The message to respond to.
+	 * @param context {Object} - The context to use for the conversation.
+	 * @return {Promise<any>} - The generated response.
+	 */
 	static async onboardingConversation(prompt, context = {}) {
 		const response = await openai.responses.create({
 			model: 'gpt-4.1',
@@ -120,6 +138,12 @@ class AIService {
 		return JSON.parse(response.output_text);
 	}
 
+	/**
+	 * Prepares the conversation history for the OpenAI API.
+	 * @param messages {Array} - The messages to prepare.
+	 * @param limit {number} - The maximum number of messages to include.
+	 * @return {Promise<Array>} - The prepared conversation history.
+	 */
 	static async prepareConversationHistory(messages, limit = 10) {
 
 		//console.log('prepareConversationHistory', messages);
@@ -154,6 +178,14 @@ class AIService {
 		});
 	}
 
+	/**
+	 * Generates a response to a message using the tooled conversation template.
+	 * @param from {string} - The sender of the message.
+	 * @param prompt {string} - The message to respond to.
+	 * @param context {Object} - The context to use for the conversation.
+	 * @param rawMessages {Array} - The raw messages to use for the conversation.
+	 * @return {Promise<string>} - The generated response.
+	 */
 	static async tooledConversation(from, prompt, context, rawMessages) {
 		// Prepare conversation history from raw messages
 		const history = await AIService.prepareConversationHistory(rawMessages);
@@ -265,6 +297,11 @@ class AIService {
 		return false;
 	}
 
+	/**
+	 * Checks if a tweet is susceptible to fact check.
+	 * @param prompt {string} - The tweet content to check.
+	 * @return {Promise<any>} - The result of the fact check.
+	 */
 	static async resolveCheck(prompt) {
 
 		const res = await openai.responses.create({

@@ -3,6 +3,10 @@ import { ethers } from 'ethers';
 
 class CryptoService {
 
+	/**
+	 * The provider to connect to the Ethereum network.
+	 * @type {ethers.providers.JsonRpcProvider}
+	 */
 	static provider = new ethers.providers.JsonRpcProvider('https://sepolia-rollup.arbitrum.io/rpc');
 
 	/**
@@ -102,6 +106,13 @@ class CryptoService {
 		}
 	}
 
+	/**
+	 * Sends Ether from one wallet to another.
+	 * @param walletObject - Wallet object containing private key
+	 * @param toAddress - Address of the recipient
+	 * @param amount - Amount of Ether to send
+	 * @return {Promise<{success: boolean, hash: string, blockNumber: number, tokenSymbol: string}>} - Transaction details
+	 */
 	static async sendEther(walletObject, toAddress, amount) {
 		try {
 			// Crear una instancia de wallet a partir del objeto wallet proporcionado
@@ -156,6 +167,11 @@ class CryptoService {
 		}
 	}
 
+	/**
+	 * Funds a wallet with MXNB and ETH.
+	 * @param walletAddress - Wallet address to fund
+	 * @return {Promise<{mxnb: *, eth: *}>} - Transaction details
+	 */
 	static async fundWallet(walletAddress) {
 
 		const mxnb = await this.sendToken(
@@ -165,7 +181,7 @@ class CryptoService {
 			},
 			'0x82b9e52b26a2954e113f94ff26647754d5a4247d',
 			walletAddress,
-			5,
+			50,
 			6,
 		);
 

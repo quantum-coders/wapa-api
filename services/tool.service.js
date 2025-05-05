@@ -4,6 +4,11 @@ import UserService from '#entities/users/user.service.js';
 
 class ToolService {
 
+	/**
+	 * Change the email of a user.
+	 * @param funcArgs {Object} - Function arguments containing user ID and new email.
+	 * @return {Promise<*>} - Updated user object.
+	 */
 	static async changeEmail(funcArgs) {
 		try {
 
@@ -23,6 +28,11 @@ class ToolService {
 		}
 	}
 
+	/**
+	 * Change the phone number of a user.
+	 * @param funcArgs {Object} - Function arguments containing user ID and new phone number.
+	 * @return {Promise<*>} - Updated user object.
+	 */
 	static async changeNicename(funcArgs) {
 		try {
 
@@ -42,6 +52,11 @@ class ToolService {
 		}
 	}
 
+	/**
+	 * Get the wallet balance of a user.
+	 * @param funcArgs {Object} - Function arguments containing user ID and wallet address.
+	 * @return {Promise<*>} - Wallet balance object.
+	 */
 	static async getWalletBalance(funcArgs) {
 		try {
 
