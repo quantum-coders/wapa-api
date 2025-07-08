@@ -1,5 +1,5 @@
 import { auth, Primate } from '@thewebchimp/primate';
-import JunoBitsoController from '#controllers/juno.controller.js';
+import JunoBitsoController from '#controllers/juno-bitso.controller.js';
 
 const router = Primate.getRouter();
 

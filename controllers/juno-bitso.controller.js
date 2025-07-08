@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import JunoBitsoService from '#services/juno.service.js';
+import JunoBitsoService from '#services/juno-bitso.service.js';
 
 const prisma = new PrismaClient();
 
