@@ -11,21 +11,23 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  uid       String   @unique @default(cuid())
-  username  String   @unique
-  email     String   @unique
-  idWa      String?  @unique @map("id_wa")
-  firstname String?
-  lastname  String?
-  nicename  String
-  password  String
-  type      String   @default("User")
-  status    String   @default("Active")
-  language  String   @default("en")
-  metas     Json?    @default("{}")
-  created   DateTime @default(now())
-  modified  DateTime @default(now()) @updatedAt
+  id         Int      @id @default(autoincrement())
+  uid        String   @unique @default(cuid())
+  username   String   @unique
+  email      String   @unique
+  idWa       String?  @unique @map("id_wa")
+  firstname  String?
+  lastname   String?
+  nicename   String
+  password   String
+  clabeBitso String?  @unique @map("clabe_bitso")
+  clabeJuno  String?  @unique @map("clabe_juno")
+  type       String   @default("User")
+  status     String   @default("Active")
+  language   String   @default("en")
+  metas      Json?    @default("{}")
+  created    DateTime @default(now())
+  modified   DateTime @default(now()) @updatedAt
 
   @@map("user")
 }
